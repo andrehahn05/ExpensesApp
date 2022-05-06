@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'models/Tansaction.dart';
+import 'models/transaction.dart';
 import 'package:intl/intl.dart';
+
 main() => runApp(const ExpensesApp());
 
 class ExpensesApp extends StatelessWidget {
@@ -13,6 +14,11 @@ class ExpensesApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
+
+  final titleController = TextEditingController();
+  final valueController = TextEditingController();
+  String value = '';
+
   final _transactions = [
     Transaction(
       id: 't1',
@@ -35,7 +41,6 @@ class MyHomePage extends StatelessWidget {
         title: const Text('Despesas Pessoais'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const SizedBox(
@@ -49,21 +54,21 @@ class MyHomePage extends StatelessWidget {
             children: _transactions.map((e) {
               return Card(
                 child: Row(
-                  children: <Widget>[
+                  children: [
                     Container(
                       margin: const EdgeInsets.symmetric(
-                        horizontal: 15, 
-                        vertical: 10
+                        horizontal: 15,
+                        vertical: 10,
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
-                        color: Colors.purple,
-                        width: 2,
+                          color: Colors.purple,
+                          width: 2,
                         ),
                       ),
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                       'R\$ ${e.value.toStringAsFixed(2)}', 
+                        'R\$ ${e.value.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -73,7 +78,7 @@ class MyHomePage extends StatelessWidget {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
+                      children: [
                         Text(
                           e.title,
                           style: const TextStyle(
@@ -83,7 +88,9 @@ class MyHomePage extends StatelessWidget {
                         ),
                         Text(
                           DateFormat('dd/MM/y').format(e.date),
-                          style: const TextStyle(color: Colors.grey),
+                          style: const TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ],
                     ),
@@ -92,6 +99,45 @@ class MyHomePage extends StatelessWidget {
               );
             }).toList(),
           ),
+          Card(
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: titleController,
+                    decoration: InputDecoration(
+                      labelText: 'Título',
+                    ),
+                  ),
+                  TextField(
+                    controller: valueController,
+                    decoration: InputDecoration(
+                      labelText: 'Valor (R\$)',
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      TextButton(
+                        child: const Text(
+                          'Nova Transação',
+                          style: TextStyle(
+                            color: Colors.purple,
+                          ),
+                        ),
+                        onPressed: () {
+                          print(titleController.text);
+                          print(valueController.text);
+                        },
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
