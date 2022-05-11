@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
-
 import 'components/tarnsaction_form.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
+import 'components/chart.dart';
+import 'dart:math';
 
 main() => runApp(const ExpensesApp());
 
@@ -50,20 +49,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction>_transactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'Conta #01',
-    //   value: 310.76,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Conta #02',
-    //   value: 511.30,
-    //   date: DateTime.now(),
-    // ),
+  final List<Transaction> _transactions = [
+    Transaction(
+      id: 't0',
+      title: 'Conta #00',
+      value: 200.76,
+      date: DateTime.now().subtract(Duration(days: 33)),
+    ),
+    Transaction(
+      id: 't1',
+      title: 'Conta #01',
+      value: 310.76,
+      date: DateTime.now().subtract(Duration(days: 3)),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Conta #02',
+      value: 511.30,
+      date: DateTime.now().subtract(Duration(days: 5)),
+    ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
+    }).toList();
+  }
 
   _handleAddTransaction(String title, double value) {
     final newTransaction = Transaction(
@@ -102,13 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(
-              child: Card(
-                color: Colors.blue,
-                child: Text('Gráfico'),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_transactions),
           ],
         ),
