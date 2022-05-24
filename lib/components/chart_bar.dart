@@ -22,9 +22,9 @@ class ChartBar extends StatelessWidget {
             child: Text('${value!.toStringAsFixed(2)}'),
           ),
         ),
-        const SizedBox(height: 5),
+        const SizedBox(height: 2),
         SizedBox(
-          height: 80,
+          height: 60,
           width: 8,
           child: Stack(
             alignment: Alignment.bottomCenter,

@@ -65,10 +65,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _handleAddTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
-        id: Random().nextDouble().toString(),
-        title: title,
-        value: value,
-        date: date,
+      id: Random().nextDouble().toString(),
+      title: title,
+      value: value,
+      date: date,
     );
     setState(() {
       _transactions.add(newTransaction);
@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Navigator.of(context).pop();
   }
-  
+
   _removeTransaction(String id) {
     setState(() {
       _transactions.removeWhere((tr) => tr.id == id);
@@ -93,22 +93,34 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _handleModal(context),
+        ),
+      ],
+    );
+    
+    final availableHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+        
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => _handleModal(context),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
-        child: Column(
+       child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(_recentTransactions),
-            TransactionList(_transactions, _removeTransaction),
+            SizedBox(
+              height: availableHeight * 0.3,
+              child: Chart(_recentTransactions),
+            ),
+            SizedBox(
+              height: availableHeight * 0.7,
+              child: TransactionList(_transactions, _removeTransaction),
+            ),
           ],
         ),
       ),
@@ -116,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
         onPressed: () => _handleModal(context),
       ),
-      //  floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
