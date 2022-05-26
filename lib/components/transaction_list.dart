@@ -14,7 +14,7 @@ class TransactionList extends StatelessWidget {
     return transactions.isEmpty
         ? LayoutBuilder(
             builder: (ctx, constraints) {
-             return Column(
+              return Column(
                 children: [
                   SizedBox(height: constraints.maxHeight * 0.05),
                   SizedBox(
@@ -26,7 +26,7 @@ class TransactionList extends StatelessWidget {
                   ),
                   SizedBox(height: constraints.maxHeight * 0.05),
                   SizedBox(
-                    height:constraints.maxHeight * 0.6,
+                    height: constraints.maxHeight * 0.6,
                     child: Image.asset(
                       'assets/images/waiting.png',
                       fit: BoxFit.cover,
@@ -67,7 +67,9 @@ class TransactionList extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   subtitle: Text(
-                    DateFormat('d MMM y').format(tr.date),
+                    DateFormat('d MMM y', "pt_BR").format(
+                      tr.date,
+                    ),
                   ),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),

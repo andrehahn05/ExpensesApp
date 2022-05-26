@@ -116,7 +116,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     final availableHeight = mediaQuery.size.height -
-          appBar.preferredSize.height - mediaQuery.padding.top;
+        appBar.preferredSize.height -
+        mediaQuery.padding.top;
 
     return Scaffold(
       appBar: appBar,
@@ -141,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
         onPressed: () => _handleModal(context),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
